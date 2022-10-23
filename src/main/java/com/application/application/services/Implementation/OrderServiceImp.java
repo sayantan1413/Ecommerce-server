@@ -1,5 +1,7 @@
 package com.application.application.services.Implementation;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,8 +57,8 @@ public class OrderServiceImp implements OrderService {
     @Override
     public List<OrderDto> getOrders(User user) {
         List<OrderDto> orders = new ArrayList<>();
-        List<OrderItemsDto> orderItems = new ArrayList<>();
         for (Order order : orderDao.findAllByUserOrderByCreatedDateDesc(user)) {
+            List<OrderItemsDto> orderItems = new ArrayList<>();
             for (OrderItems items : orderItemsDao.findAllByOrder(order)) {
                 orderItems.add(
                         new OrderItemsDto(
@@ -76,12 +78,17 @@ public class OrderServiceImp implements OrderService {
             orders.add(
                     new OrderDto(
                             order.getOrderId(),
-                            order.getCreatedDate(),
+                            formatDate(order.getCreatedDate()),
                             orderItems,
                             order.getTotalPrice()));
         }
 
         return orders;
+    }
+
+    private String formatDate(LocalDateTime date) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        return dtf.format(date);
     }
 
 }

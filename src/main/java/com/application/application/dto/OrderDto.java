@@ -1,6 +1,5 @@
 package com.application.application.dto;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -15,7 +14,7 @@ import lombok.Setter;
 public class OrderDto {
     private long orderId;
 
-    private LocalDateTime createdDate;
+    private String createdDate;
 
     private List<OrderItemsDto> orderItems;
 
