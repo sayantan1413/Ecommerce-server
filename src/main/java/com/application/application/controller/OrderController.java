@@ -28,13 +28,13 @@ public class OrderController {
     OrderService orderService;
 
     @GetMapping("/list")
-    public ResponseEntity<List<OrderDto>> getOrders(@RequestHeader("email") String email) {
+    public ResponseEntity<?> getOrders(@RequestHeader("email") String email) {
         try {
             User user = authenticationService.authenticateUser(email);
             return ResponseEntity.ok().body(orderService.getOrders(user));
 
         } catch (Exception e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
 
     }
