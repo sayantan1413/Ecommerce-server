@@ -4,10 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.EqualsAndHashCode;
@@ -23,10 +20,6 @@ import lombok.Setter;
 @Table(name = "user_info")
 public class User {
     @Id
-    // @SequenceGenerator(name = "user_sequence", sequenceName = "user_sequence",
-    // initialValue = 100000, allocationSize = 1)
-    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
-    // "user_sequence")
     @Column(name = "user_Id")
     private Long id;
     private String companyName;
