@@ -25,7 +25,7 @@ import lombok.Setter;
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long orderId;
 
     private LocalDateTime createdDate;
@@ -41,7 +41,8 @@ public class Order {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", updatable = false)
     private User user;
 
-    public Order(User user, double totalPrice) {
+    public Order(Long orderId, User user, double totalPrice) {
+        this.orderId = orderId;
         this.user = user;
         this.createdDate = LocalDateTime.now();
         this.totalPrice = totalPrice;

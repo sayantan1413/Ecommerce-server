@@ -16,6 +16,7 @@ import com.application.application.model.Product;
 import com.application.application.model.User;
 import com.application.application.repository.ProductDao;
 import com.application.application.services.AuthenticationService;
+import com.application.application.services.IdGenrator;
 import com.application.application.services.ProductService;
 
 @Service
@@ -54,6 +55,7 @@ public class ProductServiceImplementation implements ProductService {
 	public void addProduct(Product product, String email) {
 		User user = authenticationService.authenticateUser(email);
 		if (user.getCompanyName().equals(product.getManufacturerName())) {
+			product.setProductId(IdGenrator.generate());
 			product.setUser(user);
 			saveProduct(product);
 		} else {

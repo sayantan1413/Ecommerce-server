@@ -42,34 +42,6 @@ public class ProductController {
         }
     }
 
-    // @GetMapping("/list")
-    // public ResponseEntity<List<ProductDto>> searchProducts(@RequestParam String
-    // productName) {
-    // try {
-    // System.out.println(productName);
-    // List<Product> product = productDao.findAllByProductName(productName);
-    // System.out.println(product);
-    // List<ProductDto> productList = new ArrayList<>();
-    // for (Product items : product) {
-    // ProductDto item = new ProductDto(
-    // items.getProductId(),
-    // items.getProductName(),
-    // items.getProductType(),
-    // items.getProductCount(),
-    // items.getProductRating(),
-    // items.getProductPrice(),
-    // items.getManufacturerName(),
-    // items.getTag(),
-    // items.getProductImage());
-    // productList.add(item);
-    // }
-    // return new ResponseEntity<List<ProductDto>>(productList,
-    // HttpStatus.OK);
-    // } catch (Exception e) {
-    // return ResponseEntity.notFound().build();
-    // }
-    // }
-
     @GetMapping("/api/list/{page}")
     public ResponseEntity<List<ProductDto>> getProductsByUser(@RequestHeader("email") String email,
             @PathVariable int page) {

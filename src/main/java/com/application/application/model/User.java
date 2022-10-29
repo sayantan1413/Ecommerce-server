@@ -23,8 +23,10 @@ import lombok.Setter;
 @Table(name = "user_info")
 public class User {
     @Id
-    @SequenceGenerator(name = "user_sequence", sequenceName = "user_sequence", initialValue = 100000, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
+    // @SequenceGenerator(name = "user_sequence", sequenceName = "user_sequence",
+    // initialValue = 100000, allocationSize = 1)
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+    // "user_sequence")
     @Column(name = "user_Id")
     private Long id;
     private String companyName;
@@ -38,8 +40,9 @@ public class User {
     private Boolean locked = false;
     private Boolean enabled = false;
 
-    public User(String companyName, String password, String email, String phoneNo, long gstNo, String address,
+    public User(Long id, String companyName, String password, String email, String phoneNo, long gstNo, String address,
             UserRole userRole) {
+        this.id = id;
         this.companyName = companyName;
         this.password = password;
         this.email = email;

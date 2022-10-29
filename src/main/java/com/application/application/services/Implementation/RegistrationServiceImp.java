@@ -11,6 +11,7 @@ import com.application.application.dto.RegistrationRequest;
 import com.application.application.model.User;
 import com.application.application.model.UserRole;
 import com.application.application.repository.UserDao;
+import com.application.application.services.IdGenrator;
 import com.application.application.services.RegistrationService;
 
 import lombok.AllArgsConstructor;
@@ -39,6 +40,7 @@ public class RegistrationServiceImp implements RegistrationService {
         }
         System.out.println("hello");
         User user = new User(
+                IdGenrator.generate(),
                 request.getCompanyName(),
                 request.getPassword(),
                 request.getEmail(),

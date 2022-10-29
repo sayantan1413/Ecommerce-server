@@ -31,7 +31,7 @@ import lombok.ToString;
 public class Product {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	// @GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long productId;
 	private String productName;
 	private String productType;

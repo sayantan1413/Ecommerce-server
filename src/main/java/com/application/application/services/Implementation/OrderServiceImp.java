@@ -21,6 +21,7 @@ import com.application.application.model.User;
 import com.application.application.repository.OrderDao;
 import com.application.application.repository.OrderItemsDao;
 import com.application.application.services.CartService;
+import com.application.application.services.IdGenrator;
 import com.application.application.services.OrderService;
 import com.application.application.services.ProductService;
 
@@ -43,7 +44,7 @@ public class OrderServiceImp implements OrderService {
     @Override
     public void placeOrder(User user) throws Exception {
         CartDetailsDto cartDetails = cartService.listCartItems(user.getEmail());
-        Order order = new Order(user, cartDetails.getTotalCost());
+        Order order = new Order(IdGenrator.generate(), user, cartDetails.getTotalCost());
         orderDao.save(order);
         for (CartItemsDto cartItems : cartDetails.getCartItems()) {
             orderItemsDao.save(new OrderItems(order,
