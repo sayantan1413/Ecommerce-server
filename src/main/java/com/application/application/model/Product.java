@@ -38,6 +38,7 @@ public class Product {
 	private String manufacturerName;
 	private String tag;
 	private String productImage;
+	private String label;
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.REMOVE)
 	private List<Cart> carts;
@@ -48,7 +49,7 @@ public class Product {
 
 	public Product(long productId, String productName, String productType,
 			Integer productCount, float product_rating, Float product_price,
-			String manufacturerName, String tag, String productImage, User user) {
+			String manufacturerName, String tag, String productImage, String label, User user) {
 		this.productId = productId;
 		this.productName = productName;
 		this.productType = productType;
@@ -58,6 +59,7 @@ public class Product {
 		this.manufacturerName = manufacturerName;
 		this.tag = tag;
 		this.productImage = productImage;
+		this.label = label;
 		this.user = user;
 	}
 
