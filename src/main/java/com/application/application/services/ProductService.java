@@ -9,6 +9,8 @@ public interface ProductService {
 
 	public List<ProductDto> getProducts(int page);
 
+	public List<ProductDto> getProduct();
+
 	public List<ProductDto> searchProduct(String product_name);
 
 	public Product getProductById(long productId);

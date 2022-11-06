@@ -42,6 +42,16 @@ public class ProductController {
         }
     }
 
+    @GetMapping("/lists")
+    public ResponseEntity<List<ProductDto>> getProductsList() {
+        try {
+            return new ResponseEntity<List<ProductDto>>(this.productService.getProduct(),
+                    HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @GetMapping("/api/list/{page}")
     public ResponseEntity<List<ProductDto>> getProductsByUser(@RequestHeader("email") String email,
             @PathVariable int page) {

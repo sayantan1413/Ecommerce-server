@@ -52,6 +52,26 @@ public class ProductServiceImplementation implements ProductService {
 	}
 
 	@Override
+	public List<ProductDto> getProduct() {
+		List<Product> product = productDao.findAll();
+		List<ProductDto> productList = new ArrayList<>();
+		for (Product items : product) {
+			ProductDto item = new ProductDto(
+					items.getProductId(),
+					items.getProductName(),
+					items.getProductType(),
+					items.getProductCount(),
+					items.getProductRating(),
+					items.getProductPrice(),
+					items.getManufacturerName(),
+					items.getTag(),
+					items.getProductImage());
+			productList.add(item);
+		}
+		return productList;
+	}
+
+	@Override
 	public void addProduct(Product product, String email) {
 		User user = authenticationService.authenticateUser(email);
 		if (user.getCompanyName().equals(product.getManufacturerName())) {
