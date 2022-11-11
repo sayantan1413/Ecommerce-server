@@ -28,7 +28,9 @@ public class CartItemsDto {
                 cart.getProduct().getProductPrice(),
                 cart.getProduct().getManufacturerName(),
                 cart.getProduct().getTag(),
-                cart.getProduct().getProductImage()));
+                cart.getProduct().getProductImage(),
+                cart.getProduct().getLabel(),
+                cart.getProduct().getDescription()));
     }
 
 }

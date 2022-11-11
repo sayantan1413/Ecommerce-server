@@ -33,22 +33,8 @@ public class ProductServiceImplementation implements ProductService {
 	public List<ProductDto> getProducts(int page) {
 		int pageSize = 40;
 		Pageable paging = PageRequest.of(page, pageSize);
-		Page<Product> product = productDao.findAll(paging);
-		List<ProductDto> productList = new ArrayList<>();
-		for (Product items : product) {
-			ProductDto item = new ProductDto(
-					items.getProductId(),
-					items.getProductName(),
-					items.getProductType(),
-					items.getProductCount(),
-					items.getProductRating(),
-					items.getProductPrice(),
-					items.getManufacturerName(),
-					items.getTag(),
-					items.getProductImage());
-			productList.add(item);
-		}
-		return productList;
+		Page<Product> products = productDao.findAll(paging);
+		return listProducts(products);
 	}
 
 	@Override
@@ -65,7 +51,9 @@ public class ProductServiceImplementation implements ProductService {
 					items.getProductPrice(),
 					items.getManufacturerName(),
 					items.getTag(),
-					items.getProductImage());
+					items.getProductImage(),
+					items.getLabel(),
+					items.getDescription());
 			productList.add(item);
 		}
 		return productList;
@@ -96,6 +84,8 @@ public class ProductServiceImplementation implements ProductService {
 			product.setManufacturerName(productDto.getManufacturerName());
 			product.setTag(productDto.getTag());
 			product.setProductImage(productDto.getProductImage());
+			product.setLabel(productDto.getLabel());
+			product.setDescription(productDto.getDescription());
 			saveProduct(product);
 		} else {
 			throw new IllegalArgumentException("User not valid!!!");
@@ -118,12 +108,7 @@ public class ProductServiceImplementation implements ProductService {
 		productDao.save(product);
 	}
 
-	@Override
-	public List<ProductDto> getProductByUser(String email, int page) {
-		User user = authenticationService.authenticateUser(email);
-		int pageSize = 40;
-		Pageable paging = PageRequest.of(page, pageSize);
-		List<Product> products = productDao.findAllByUser(user, paging);
+	private List<ProductDto> listProducts(Page<Product> products) {
 		List<ProductDto> productList = new ArrayList<>();
 		for (Product items : products) {
 			ProductDto item = new ProductDto(
@@ -135,10 +120,21 @@ public class ProductServiceImplementation implements ProductService {
 					items.getProductPrice(),
 					items.getManufacturerName(),
 					items.getTag(),
-					items.getProductImage());
+					items.getProductImage(),
+					items.getLabel(),
+					items.getDescription());
 			productList.add(item);
 		}
 		return productList;
+	}
+
+	@Override
+	public List<ProductDto> getProductByUser(String email, int page) {
+		User user = authenticationService.authenticateUser(email);
+		int pageSize = 40;
+		Pageable paging = PageRequest.of(page, pageSize);
+		Page<Product> products = productDao.findAllByUser(user, paging);
+		return listProducts(products);
 	}
 
 	@Override
@@ -148,27 +144,28 @@ public class ProductServiceImplementation implements ProductService {
 	}
 
 	@Override
-	public List<ProductDto> searchProduct(String product_name) {
-		// System.out.println(product_name);
-		// // product_name = "%" + product_name + ";
-		// // List<Product> product =
-		// // productDao.findByProductNameContainingIgnoreCase(product_name);
-		// //System.out.println(product);
-		// List<ProductDto> productList = new ArrayList<>();
-		// for (Product items : product) {
-		// ProductDto item = new ProductDto(
-		// items.getProductId(),
-		// items.getProductName(),
-		// items.getProductType(),
-		// items.getProductCount(),
-		// items.getProductRating(),
-		// items.getProductPrice(),
-		// items.getManufacturerName(),
-		// items.getTag(),
-		// items.getProductImage());
-		// productList.add(item);
-		// }
-		return null;
+	public List<ProductDto> searchProduct(String product_name, String label, int page) {
+		int pageSize = 40;
+		Pageable paging = PageRequest.of(page, pageSize);
+		List<Product> products = productDao.findByProductNameContainingIgnoreCase(product_name, paging).stream()
+				.filter(item -> item.getLabel().equals(label)).toList();
+		List<ProductDto> productList = new ArrayList<>();
+		for (Product items : products) {
+			ProductDto item = new ProductDto(
+					items.getProductId(),
+					items.getProductName(),
+					items.getProductType(),
+					items.getProductCount(),
+					items.getProductRating(),
+					items.getProductPrice(),
+					items.getManufacturerName(),
+					items.getTag(),
+					items.getProductImage(),
+					items.getLabel(),
+					items.getDescription());
+			productList.add(item);
+		}
+		return productList;
 	}
 
 }

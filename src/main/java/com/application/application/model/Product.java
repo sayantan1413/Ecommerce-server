@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -39,17 +40,20 @@ public class Product {
 	private String tag;
 	private String productImage;
 	private String label;
-	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.REMOVE)
-	private List<Cart> carts;
+	@Lob
+	private String description;
+	// @JsonIgnore
+	// @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade =
+	// CascadeType.REMOVE)
+	// private List<Cart> carts;
 
-	@ManyToOne
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id", updatable = false)
 	private User user;
 
 	public Product(long productId, String productName, String productType,
 			Integer productCount, float product_rating, Float product_price,
-			String manufacturerName, String tag, String productImage, String label, User user) {
+			String manufacturerName, String tag, String productImage, String label, User user, String description) {
 		this.productId = productId;
 		this.productName = productName;
 		this.productType = productType;
@@ -61,6 +65,7 @@ public class Product {
 		this.productImage = productImage;
 		this.label = label;
 		this.user = user;
+		this.description = description;
 	}
 
 }

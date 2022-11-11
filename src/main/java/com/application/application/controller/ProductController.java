@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -26,9 +27,6 @@ import com.application.application.services.ProductService;
 @RequestMapping(value = "/product", produces = "application/json")
 @CrossOrigin(origins = "*")
 public class ProductController {
-
-    // @Autowired
-    // private ProductDao productDao;
     @Autowired
     private ProductService productService;
 
@@ -46,6 +44,20 @@ public class ProductController {
     public ResponseEntity<List<ProductDto>> getProductsList() {
         try {
             return new ResponseEntity<List<ProductDto>>(this.productService.getProduct(),
+                    HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("search")
+    public ResponseEntity<List<ProductDto>> searchProducts(@RequestParam(name = "name") String productName,
+            @RequestParam(name = "label") String label,
+            @RequestParam int page) {
+        try {
+            System.out.println(label);
+            return new ResponseEntity<List<ProductDto>>(
+                    this.productService.searchProduct(productName, label, page),
                     HttpStatus.OK);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();

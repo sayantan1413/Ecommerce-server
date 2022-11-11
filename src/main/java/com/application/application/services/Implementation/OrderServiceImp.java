@@ -52,7 +52,7 @@ public class OrderServiceImp implements OrderService {
                     cartItems.getQuantity(),
                     cartItems.getProductDto().getProductPrice()));
         }
-        cartService.deleteCartItems(user.getEmail());
+        cartService.deleteCart(user);
     }
 
     @Override
@@ -73,7 +73,9 @@ public class OrderServiceImp implements OrderService {
                                         items.getProduct().getProductPrice(),
                                         items.getProduct().getManufacturerName(),
                                         items.getProduct().getTag(),
-                                        items.getProduct().getProductImage()),
+                                        items.getProduct().getProductImage(),
+                                        items.getProduct().getLabel(),
+                                        items.getProduct().getDescription()),
                                 items.getQuantity()));
             }
             orders.add(

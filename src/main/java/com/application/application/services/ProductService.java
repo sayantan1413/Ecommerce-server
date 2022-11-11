@@ -11,7 +11,7 @@ public interface ProductService {
 
 	public List<ProductDto> getProduct();
 
-	public List<ProductDto> searchProduct(String product_name);
+	public List<ProductDto> searchProduct(String productName, String label, int page);
 
 	public Product getProductById(long productId);
 

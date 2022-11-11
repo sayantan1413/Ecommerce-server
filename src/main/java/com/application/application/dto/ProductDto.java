@@ -17,4 +17,6 @@ public class ProductDto {
     private String manufacturerName;
     private String tag;
     private String productImage;
+    private String label;
+    private String description;
 }

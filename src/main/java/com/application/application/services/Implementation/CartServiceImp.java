@@ -51,9 +51,9 @@ public class CartServiceImp implements CartService {
     public CartDetailsDto listCartItems(String email) {
         User user = authenticationService.authenticateUser(email);
         List<Cart> cartList = cartDao.findAllByUserOrderByCreatedDateDesc(user);
-        if (cartList.isEmpty())
-            throw new IllegalArgumentException("Cart Empty!!!!");
         List<CartItemsDto> cartItemsList = new ArrayList<>();
+        if (cartList.isEmpty())
+            return new CartDetailsDto();
         double totalPrice = 0;
         for (Cart cart : cartList) {
             totalPrice += cart.getProduct().getProductPrice();
@@ -95,6 +95,11 @@ public class CartServiceImp implements CartService {
             Product product = cartItem.getProduct();
             updateProductQauntity(product, cartItem.getQuantity(), 0);
         }
+        cartDao.deleteByUser(user);
+    }
+
+    @Override
+    public void deleteCart(User user) {
         cartDao.deleteByUser(user);
     }
 }
